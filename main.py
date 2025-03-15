@@ -7,16 +7,30 @@ import json
 from outprint import *
 import random
 import re
+import configparser
 
 
-def put_request(timestamp, time, objectCode, elderAge, elderName, elderSex):
+def put_request(timestamp, time, objectCode, elderAge, elderName, elderSex, heart_max, heart_min, body_temp_max, body_temp_min, sbp_max, sbp_min, dbp_max, dbp_min, blood_glucose_max, blood_glucose_min, pre):
     # 生成随机的 sbp、dbp、hr、thermometer 和 bloodGlucose 值
-    sbp = str(random.randint(90, 140))
-    dbp = str(random.randint(60, 90))
-    hr = str(random.randint(60, 100))
-    thermometer_ori = str(random.uniform(36.0, 36.8))
+    info(f"舒张压最小值为{dbp_min}，最大值为{dbp_max}")
+    info(f"收缩压最小值为{sbp_min}，最大值为{sbp_max}")
+    info(f"心率最小值为{heart_min}，最大值为{heart_max}")
+    info(f"体温最小值为{body_temp_min}，最大值为{body_temp_max}，保留{pre}位小数")
+    info(f"血糖最小值为{blood_glucose_min}，最大值为{blood_glucose_max}，保留{pre}位小数")
+    info("请确认（Y/N）")
+    confirm = input()
+    if confirm.upper() == 'Y': 
+        success("确认上传")
+        pass
+    else:
+        error("取消上传")
+        os._exit(0)
+    sbp = str(random.randint(sbp_min, sbp_max))
+    dbp = str(random.randint(dbp_min, dbp_max))
+    hr = str(random.randint(heart_min, heart_max))
+    thermometer_ori = str(random.uniform(body_temp_min, body_temp_max))
     thermometer = str(round(float(thermometer_ori), 1))
-    bloodGlucose_ori = str(random.uniform(3.9, 6.1))
+    bloodGlucose_ori = str(random.uniform(blood_glucose_min, blood_glucose_max))
     bloodGlucose = str(round(float(bloodGlucose_ori), 1))
 
 
@@ -127,8 +141,66 @@ def get_data_from_excel(file_path):
         error("文件不存在，请检查路径是否正确。")
         return []
 
+def get_default():
+    # 创建一个 ConfigParser 对象
+    config = configparser.ConfigParser()
+
+    # 读取配置文件
+    config.read('./settings.ini')
+
+    # 获取配置信息并存储到变量中
+    heart_max = config.getint('Vital', 'heart_max')
+    heart_min = config.getint('Vital', 'heart_min')
+    body_temp_max = config.getfloat('Vital', 'body_temp_max')
+    body_temp_min = config.getfloat('Vital', 'body_temp_min')
+    sbp_max = config.getint('Vital', 'sbp_max')
+    sbp_min = config.getint('Vital', 'sbp_min')
+    dbp_max = config.getint('Vital','dbp_max')
+    dbp_min = config.getint('Vital','dbp_min')
+    blood_glucose_max = config.getfloat('Vital', 'blood_glucose_max')
+    blood_glucose_min = config.getfloat('Vital', 'blood_glucose_min')
+    pre = config.getint('Vital', 'pre')
+    file_path = config.get('File', 'file_path')
+
+    info(str(heart_max)+str(heart_min)+str(body_temp_max)+str(body_temp_min)+str(sbp_max)+str(sbp_min)+str(dbp_max)+str(dbp_min)+str(blood_glucose_max)+str(blood_glucose_min)+str(pre)+str(file_path))
+
+    return heart_max, heart_min, body_temp_max, body_temp_min, sbp_max, sbp_min, dbp_max, dbp_min, blood_glucose_max, blood_glucose_min, pre, file_path
+
 if __name__ == '__main__':
-    file_path = 'eee.xlsx'
+    heart_max, heart_min, body_temp_max, body_temp_min, sbp_max, sbp_min, dbp_max, dbp_min, blood_glucose_max, blood_glucose_min, pre, file_path = get_default()
+
+    print("===================Powered by Python===========================")
+    time.sleep(0.05)
+    print(" ##   ##  ######   ##        ####     ####    ##   ##  ######  ")
+    time.sleep(0.05)
+    print(" ##   ##  ##       ##       ##  ##   ##  ##   ### ###  ##      ")
+    time.sleep(0.05)
+    print(" ##   ##  ##       ##       ##       ##  ##   #######  ##      ")
+    time.sleep(0.05)
+    print(" ## # ##  ####     ##       ##       ##  ##   ## # ##  ####    ")
+    time.sleep(0.05)
+    print(" #######  ##       ##       ##       ##  ##   ##   ##  ##      ")
+    time.sleep(0.05)
+    print(" ### ###  ##       ##       ##  ##   ##  ##   ##   ##  ##      ")
+    time.sleep(0.05)
+    print(" ##   ##  ######   ######    ####     ####    ##   ##  ######  ")
+    time.sleep(0.05)
+    print("===================Dedigned by Bolin===========================")
+    time.sleep(0.05)
+    print("===================version: v.1.0.0============================")
+    time.sleep(0.05)
+    print("使用守则：")
+    warning("严禁使用本程序及衍生修改版本对服务器进行DOS攻击，否则后果自负！")
+    warning("本程序不会检查随机数是否合理，若不确定请使用默认数据！")
+    time.sleep(1)
+    info("请将包含成员的列表存储到excel文件夹中！")
+    info("列表有且只能有一列，即姓名列。程序只会读取第一张表！")
+    info("若出现错误，请立即用Ctrl+C退出程序！并立即上报！")
+    info("祝您使用顺利！ :-D")
+    time.sleep(3)
+
+    #file_path = './excel/excel.xlsx'
+    # 读取 Excel 文件
     data = get_data_from_excel(file_path)
     for stuff_ori in data:
         # 正则表达式模式，匹配一个或多个中文字符
