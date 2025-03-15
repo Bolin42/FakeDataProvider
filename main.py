@@ -146,21 +146,28 @@ def get_default():
     config = configparser.ConfigParser()
 
     # 读取配置文件
-    config.read('./settings.ini')
+    config.read('。/settings.ini')
 
     # 获取配置信息并存储到变量中
-    heart_max = config.getint('Vital', 'heart_max')
-    heart_min = config.getint('Vital', 'heart_min')
-    body_temp_max = config.getfloat('Vital', 'body_temp_max')
-    body_temp_min = config.getfloat('Vital', 'body_temp_min')
-    sbp_max = config.getint('Vital', 'sbp_max')
-    sbp_min = config.getint('Vital', 'sbp_min')
-    dbp_max = config.getint('Vital','dbp_max')
-    dbp_min = config.getint('Vital','dbp_min')
-    blood_glucose_max = config.getfloat('Vital', 'blood_glucose_max')
-    blood_glucose_min = config.getfloat('Vital', 'blood_glucose_min')
-    pre = config.getint('Vital', 'pre')
-    file_path = config.get('File', 'file_path')
+    try:
+        heart_max = config.getint('Vital', 'heart_max')
+        heart_min = config.getint('Vital', 'heart_min')
+        body_temp_max = config.getfloat('Vital', 'body_temp_max')
+        body_temp_min = config.getfloat('Vital', 'body_temp_min')
+        sbp_max = config.getint('Vital', 'sbp_max')
+        sbp_min = config.getint('Vital', 'sbp_min')
+        dbp_max = config.getint('Vital', 'dbp_max')
+        dbp_min = config.getint('Vital', 'dbp_min')
+        blood_glucose_max = config.getfloat('Vital', 'blood_glucose_max')
+        blood_glucose_min = config.getfloat('Vital', 'blood_glucose_min')
+        pre = config.getint('Vital', 'pre')
+        file_path = config.get('File', 'file_path')
+    except configparser.NoSectionError:
+        print("Section 'Vital' or 'File' does not exist")
+    except configparser.NoOptionError:
+        print("Option does not exist in section 'Vital' or 'File'")
+    except ValueError:
+        print("Value for the option is not an integer or float")
 
     info(str(heart_max)+str(heart_min)+str(body_temp_max)+str(body_temp_min)+str(sbp_max)+str(sbp_min)+str(dbp_max)+str(dbp_min)+str(blood_glucose_max)+str(blood_glucose_min)+str(pre)+str(file_path))
 
