@@ -146,7 +146,7 @@ def get_default():
     config = configparser.ConfigParser()
 
     # 读取配置文件
-    config.read('。/settings.ini')
+    config.read('./settings.ini')
 
     # 获取配置信息并存储到变量中
     try:
@@ -169,12 +169,25 @@ def get_default():
     except ValueError:
         print("Value for the option is not an integer or float")
 
-    info(str(heart_max)+str(heart_min)+str(body_temp_max)+str(body_temp_min)+str(sbp_max)+str(sbp_min)+str(dbp_max)+str(dbp_min)+str(blood_glucose_max)+str(blood_glucose_min)+str(pre)+str(file_path))
+    #info(f"heart_max: {heart_max}\n")
+    #info(f"heart_min: {heart_min}\n")
+    #info(f"body_temp_max: {body_temp_max}\n")
+    #info(f"body_temp_min: {body_temp_min}\n")
+    #info(f"sbp_max: {sbp_max}\n")
+    #info(f"sbp_min: {sbp_min}\n")
+    #info(f"dbp_max: {dbp_max}\n")
+    #info(f"dbp_min: {dbp_min}\n")
+    #info(f"blood_glucose_max: {blood_glucose_max}\n")
+    #info(f"blood_glucose_min: {blood_glucose_min}\n")
+    #info(f"pre: {pre}\n")
+    #info(f"file_path: {file_path}")
 
     return heart_max, heart_min, body_temp_max, body_temp_min, sbp_max, sbp_min, dbp_max, dbp_min, blood_glucose_max, blood_glucose_min, pre, file_path
 
 if __name__ == '__main__':
     heart_max, heart_min, body_temp_max, body_temp_min, sbp_max, sbp_min, dbp_max, dbp_min, blood_glucose_max, blood_glucose_min, pre, file_path = get_default()
+
+    #warning(str(heart_max)+str(heart_min)+str(body_temp_max)+str(body_temp_min)+str(sbp_max)+str(sbp_min)+str(dbp_max)+str(dbp_min)+str(blood_glucose_max)+str(blood_glucose_min)+str(pre)+str(file_path))
 
     print("===================Powered by Python===========================")
     time.sleep(0.05)
@@ -208,7 +221,9 @@ if __name__ == '__main__':
 
     #file_path = './excel/excel.xlsx'
     # 读取 Excel 文件
-    data = get_data_from_excel(file_path)
+    pattern = r"'(.*?)'"
+    final_filePath = ''.join(re.findall(pattern, file_path))
+    data = get_data_from_excel(final_filePath)
     for stuff_ori in data:
         # 正则表达式模式，匹配一个或多个中文字符
         pattern = r'[\u4e00-\u9fff]+'
