@@ -146,7 +146,7 @@ def get_default():
     config = configparser.ConfigParser()
 
     # 读取配置文件
-    config.read('。/settings.ini')
+    config.read('./settings.ini')
 
     # 获取配置信息并存储到变量中
     try:
