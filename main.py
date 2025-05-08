@@ -48,8 +48,8 @@ def put_request(timestamp, time, objectCode, elderAge, elderName, elderSex, hear
         'branchId': '23',
         'sec-ch-ua': '"Chromium";v="134", "Not:A-Brand";v="24", "Microsoft Edge";v="134"',
         'sec-ch-ua-mobile': '?0',
-        'Authorization': 'Bearer sunjiangzhou_23_d288268ed37846c09d649b365325fa24'
-    }
+        'Authorization': 'Bearer ' 
+    } //should replace authorization with real string 
 
     response = requests.request("PUT", url, headers=headers, data=payload)
 
@@ -73,8 +73,8 @@ def get_start_date(objectCode, timestamp):
   'sec-ch-ua': '"Chromium";v="134", "Not:A-Brand";v="24", "Microsoft Edge";v="134"',
   'sec-ch-ua-mobile': '?0',
   'sec-ch-ua-platform': '"Windows"',
-  'Authorization': 'Bearer sunjiangzhou_23_d288268ed37846c09d649b365325fa24'
-    }
+  'Authorization': 'Bearer'
+    } //should replace the authorization with real string 
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
@@ -105,8 +105,8 @@ def get_stuff_ID(elderNameAndNo, timestamp):
   'sec-ch-ua': '"Chromium";v="134", "Not:A-Brand";v="24", "Microsoft Edge";v="134"',
   'sec-ch-ua-mobile': '?0',
   'sec-ch-ua-platform': '"Windows"',
-  'Authorization': 'Bearer sunjiangzhou_23_d288268ed37846c09d649b365325fa24'
-    }
+  'Authorization': 'Bearer '
+    } //should replace the authorization with real string 
 
     response = requests.request("GET", url, headers=headers, data=payload)
     response_json = json.loads(response.text)
