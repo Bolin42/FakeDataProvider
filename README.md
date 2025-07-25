@@ -74,7 +74,70 @@
   主程序入口，请自行在`main`函数内修改API密钥及地址。  
   **获取API参数方法：**  
   使用浏览器开发者工具抓取目标平台的请求/响应包，提取密钥和地址。
+  **相关填写位置**
+在 `main.py` 中，API地址和密钥需要在以下位置填写：
 
+---
+
+### 1. 主要填写函数
+
+#### （1）put_request函数
+- **行数：第33行附近**
+- **函数名：put_request**
+- **API地址：**
+  ```python
+  url = "https://xn--l6qy95a.fun/baseData/signs/general/add?time="+timestamp
+  ```
+- **API密钥：**
+  ```python
+  headers = {
+      ...
+      'Authorization': 'Bearer '   # 此处需填写真实密钥字符串
+      ...
+  }
+  ```
+- **说明：**  
+  请将 `'Authorization': 'Bearer '` 替换为 `'Authorization': 'Bearer <你的密钥>'`。
+
+#### （2）get_start_date函数
+- **行数：第64行附近**
+- **函数名：get_start_date**
+- **API地址：**
+  ```python
+  url = "https://xn--l6qy95a.fun/baseData/signs/general/page?objectCode="+objectCode+"&branchId=23&current=1&size=1&time=" + timestamp
+  ```
+- **API密钥：**
+  ```python
+  headers = {
+      ...
+      'Authorization': 'Bearer'  # 此处需填写真实密钥字符串
+      ...
+  }
+  ```
+- **说明：**  
+  请将 `'Authorization': 'Bearer'` 替换为 `'Authorization': 'Bearer <你的密钥>'`。
+
+#### （3）get_stuff_ID函数
+- **行数：第96行附近**
+- **函数名：get_stuff_ID**
+- **API地址：**
+  ```python
+  url = "https://xn--l6qy95a.fun/baseData/data/elderList?elderNameAndNo="+elderNameAndNo+"&size=1&type=all&time="+timestamp
+  ```
+- **API密钥：**
+  ```python
+  headers = {
+      ...
+      'Authorization': 'Bearer '  # 此处需填写真实密钥字符串
+      ...
+  }
+  ```
+- **说明：**  
+  请将 `'Authorization': 'Bearer '` 替换为 `'Authorization': 'Bearer <你的密钥>'`。
+
+---
+
+**所有 API 地址均为以 `https://xn--l6qy95a.fun/` 开头的相关路径，密钥填写方式均为 headers 字典内的 `'Authorization': 'Bearer <你的密钥>'`。**
 ---
 
 ## 🧭 API参数获取指南
