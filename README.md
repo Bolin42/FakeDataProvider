@@ -1,7 +1,7 @@
 # 🩺 医疗数据伪造工具
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
-![License: Custom](https://img.shields.io/badge/license-Restricted-important)
+![License: Apache](https://img.shields.io/badge/license-Apache%202.0-green)
 ![Status: Experimental](https://img.shields.io/badge/status-experimental-yellow)
 
 ---
